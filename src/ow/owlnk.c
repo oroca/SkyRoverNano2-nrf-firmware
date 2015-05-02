@@ -49,8 +49,8 @@
 #define TICK_PER_US 16
 
 //local variables
-static bool running = false;
-static int sample = 0;
+volatile static bool running = false;
+volatile static int sample = 0;
 
 // exportable link-level functions
 SMALLINT owTouchReset(int);

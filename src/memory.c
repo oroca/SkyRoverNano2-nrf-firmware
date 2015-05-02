@@ -39,6 +39,8 @@
 static bool isInit;
 static int nMemory;
 
+extern void led_test( void );
+
 #ifdef BLE
 #define OW_MAX_CACHED 1
 static struct {unsigned char address[8]; unsigned char data[122];} owCache[OW_MAX_CACHED];
@@ -74,9 +76,13 @@ static bool selectMemory(int n)
 int owScan()
 {
   int nMem = 0;
+
+
+
   owTouchReset(0);
 
   msDelay(10);
+
 
   if (owFirst(0, 1, 0))
   {
@@ -96,6 +102,8 @@ int owScan()
   }
   return nMem;
 }
+
+
 
 void memoryInit()
 {

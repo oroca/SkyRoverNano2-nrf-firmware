@@ -24,6 +24,14 @@
 #include <nrf.h>
 
 #ifdef BLE
+
+#include <nrf.h>
+#include <nrf_mbr.h>
+#include <nrf_sdm.h>
+#include <nrf_gpio.h>
+#include <nrf_gpiote.h>
+
+
 #include <nrf_soc.h>
 #endif
 
@@ -72,10 +80,43 @@ static bool boottedFromBootloader;
 static void handleRadioCmd(struct esbPacket_s * packet);
 static void handleBootloaderCmd(struct esbPacket_s *packet);
 
+void led_test( void )
+{
+	volatile int i;
+
+	  while(1)
+	  {
+		  nrf_gpio_pin_set(LED_PIN);
+		  for(i=0; i<1000000; i++);
+		  nrf_gpio_pin_clear(LED_PIN);
+		  for(i=0; i<1000000; i++);
+	  }
+}
+
 int main()
 {
+  volatile int i;
+
+  nrf_gpio_cfg_output(LED_PIN);
+  nrf_gpio_pin_clear(LED_PIN);
+
+
+
   systickInit();
+
+  /*
+  while(1)
+  {
+	  nrf_gpio_pin_set(LED_PIN);
+	  for(i=0; i<100000; i++);
+	  nrf_gpio_pin_clear(LED_PIN);
+	  for(i=0; i<100000; i++);
+  }
+  */
+
   memoryInit();
+
+
 
 #ifdef BLE
   ble_init();
@@ -83,6 +124,7 @@ int main()
   NRF_CLOCK->TASKS_HFCLKSTART = 1UL;
   while(!NRF_CLOCK->EVENTS_HFCLKSTARTED);
 #endif
+
 
 #ifdef SEMIHOSTING
   initialise_monitor_handles();
@@ -110,9 +152,6 @@ int main()
   if ((NRF_POWER->GPREGRET&0x01) == 0) {
 		  pmSetState(pmSysRunning);
   }
-
-  LED_ON();
-
 
   NRF_GPIO->PIN_CNF[RADIO_PAEN_PIN] |= GPIO_PIN_CNF_DIR_Output | (GPIO_PIN_CNF_DRIVE_S0H1<<GPIO_PIN_CNF_DRIVE_Pos);
 

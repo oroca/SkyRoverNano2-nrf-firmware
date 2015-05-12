@@ -142,6 +142,10 @@ reset:
 openocd: $(PROGRAM).elf
 	$(OPENOCD) -d2 -f $(OPENOCD_INTERFACE) -f $(OPENOCD_TARGET) -c init -c targets
 
+openocd2: $(PROGRAM).elf
+	$(OPENOCD) -d2 -f $(OPENOCD_INTERFACE) -f $(OPENOCD_TARGET) -c init  -c targets -c "reset halt" \
+                 -c "nrf51 mass_erase" -c shutdown
+
 
 semihosting: $(PROGRAM).elf
 	$(OPENOCD) -d2 -f $(OPENOCD_INTERFACE) -f $(OPENOCD_TARGET) -c init -c targets -c reset -c "arm semihosting enable" -c reset
@@ -164,7 +168,8 @@ factory_reset:
 	make mass_erase
 ifeq ($(strip $(S110)),1)
 	make flash_s110
-	make flash_mbs
 	make flash_cload
-endif
 	make flash
+	make flash_mbs
+else
+endif

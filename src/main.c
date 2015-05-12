@@ -86,10 +86,12 @@ void led_test( void )
 
 	  while(1)
 	  {
+#ifdef BLE
 		  nrf_gpio_pin_set(LED_PIN);
 		  for(i=0; i<1000000; i++);
 		  nrf_gpio_pin_clear(LED_PIN);
 		  for(i=0; i<1000000; i++);
+#endif
 	  }
 }
 
@@ -97,9 +99,10 @@ int main()
 {
   volatile int i;
 
+#ifdef BLE
   nrf_gpio_cfg_output(LED_PIN);
   nrf_gpio_pin_clear(LED_PIN);
-
+#endif
 
 
   systickInit();

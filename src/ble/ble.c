@@ -47,6 +47,8 @@
 
 #define DEVICE_NAME                          "Crazyflie"                              /**< Name of device. Will be included in the advertising data. */
 #define MANUFACTURER_NAME                    "Bitcraze"                     /**< Manufacturer. Will be passed to Device Information Service. */
+//#define DEVICE_NAME                          "SkyRover"                              /**< Name of device. Will be included in the advertising data. */
+//#define MANUFACTURER_NAME                    "OROCA"                     /**< Manufacturer. Will be passed to Device Information Service. */
 #define APP_ADV_INTERVAL                     200                                        /**< The advertising interval (in units of 0.625 ms. This value corresponds to 125 ms). */
 #define APP_ADV_TIMEOUT_IN_SECONDS           0                                       /**< The advertising timeout in units of seconds. */
 
